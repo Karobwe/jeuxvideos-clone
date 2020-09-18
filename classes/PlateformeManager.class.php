@@ -13,7 +13,7 @@ class PlateformeManager {
 
     /**
      * @param int $idPlatforme
-     * @return array
+     * @return array|bool
      */
     public function get(int $idPlateforme): array {
         $stmt = $this->pdo->prepare("SELECT * FROM `jeux_video`.`plateforme` 
@@ -30,7 +30,7 @@ class PlateformeManager {
 
     /**
      * @param Plateforme $plateforme L'objet à insérer dans la base de données
-     * @return int Le nombre de lignes affecter par la méthode
+     * @return int L'id dans la base dedonnées de la plateforme qui vient dêtre insérer
      */
     public function add(Plateforme $plateforme): int {
         $stmt = $this->pdo->prepare("INSERT INTO `plateforme` (`idPlateforme`, `nomPlateforme`) 
@@ -41,7 +41,7 @@ class PlateformeManager {
         $stmt->execute();
         $stmt->closeCursor();
 
-        return $stmt->rowCount();
+        return $this->pdo->lastInsertId();
     }
 
     /**
@@ -54,10 +54,10 @@ class PlateformeManager {
         // Si la platefomre n'éxiste pas dans la base de données, 
         // on quitte directement la fonction
         if(!$this->get($plateforme->getIdPlateforme())) {
-            pre_var_dump('Impossible de récupérer la plateforme');
+            bootstrap_alert('Impossible de récupérer la plateforme');
             return 0;
         } else {
-            pre_var_dump('La plateforme existe bien dans la bdd');
+            bootstrap_alert('La plateforme existe bien dans la bdd');
         }
 
         $stmt = $this->pdo->prepare("UPDATE `jeux_video`.`plateforme` 
@@ -66,6 +66,31 @@ class PlateformeManager {
         );
 
         $stmt->bindValue(':nomPlateforme', $plateforme->getNomPlateforme(), PDO::PARAM_STR);
+        $stmt->bindValue(':idPlateforme', $plateforme->getIdPlateforme(), PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+        
+        return $stmt->rowCount();
+    }
+
+    /**
+     * Supprime une catégorie de la base de données
+     * 
+     * @param Plateforme $plateforme L'objet à supprimer
+     * @return int  Le nombre de lignes affecter par la méthode
+     */
+    public function delete(Plateforme $plateforme) {
+        // Si la platefomre n'éxiste pas dans la base de données, 
+        // on quitte directement la fonction
+        if(!$this->get($plateforme->getIdPlateforme())) {
+            bootstrap_alert('Impossible de récupérer la plateforme');
+            return 0;
+        } else {
+            bootstrap_alert('La plateforme existe bien dans la bdd');
+        }
+
+        $stmt = $this->pdo->prepare("DELETE FROM `jeux_video`.`plateforme` WHERE (`idPlateforme` = :idPlateforme);");
+
         $stmt->bindValue(':idPlateforme', $plateforme->getIdPlateforme(), PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Passe le ou les variables passés en paramètre
+ * à la méthode var_dump() de PHP, en entourant 
+ * le tout avec les balises HTML <pre></pre>
+ * pour avoir un affichage plus lisible
+ */
 function pre_var_dump(...$args) {
   echo '<pre class="bg-dark text-white p-3">';
   var_dump($args);

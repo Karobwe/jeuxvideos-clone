@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function($classe){
-    require_once 'classes/'.$classe.'.class.php';
+    require_once '../classes/'.$classe.'.class.php';
 });
 
 require_once '../includes/db.php';
@@ -17,22 +17,36 @@ $datas = array(
     'idPlateforme' => 3,
     'nomPlateforme' => 'PC'
 );
-  
+
 $plateforme = new Plateforme($datas);
-  
+
 $plateformeManager = new PlateformeManager($pdo);
-  
-pre_var_dump($plateformeManager->get(9));
-  
-$plateforme->setNomPlateforme('PC');
-$plateformeManager->update($plateforme);
-  
-pre_var_dump($plateformeManager->get(9));
-  
-die();
-  
-if($plateformeManager->add($plateforme)) {
-    bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été ajouter à la base de donner");
+
+echo '<p>Test de l\'ajout d\'une plateforme</p>';
+$lastId = $plateformeManager->add($plateforme);
+if($lastId) {
+    // Comme la colonne id est en auto_increment, la plateforme
+    // n'auras pas forcément l'id qu'il avait avant donc
+    // on récupère celle que la bdd lui a attribué
+    $plateforme->setIdPlateforme($lastId);
+    bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été ajouter à la base de données");
+}
+
+echo '<p>Test de la récupération d\'une plateforme</p>';
+if($plateformeManager->get($lastId)) {
+    bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été récupérer");
+}
+
+echo '<p>Test de la modification d\'une plateforme</p>';
+$ancien_nom = $plateforme->getNomPlateforme();
+$plateforme->setNomPlateforme('Switch');
+if($plateformeManager->update($plateforme)) {
+    bootstrap_alert("La plateforme $ancien_nom a été renommer en {$plateforme->getNomPlateforme()}");
+}
+
+echo '<p>Test de la suppression d\'une plateforme</p>';
+if($plateformeManager->delete($plateforme)) {
+    bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été supprimer de la base de donner");
 }
 
 include '../includes/footer.php';
