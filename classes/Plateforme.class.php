@@ -5,12 +5,12 @@ class Plateforme {
     /**
      * @var int Identifiant dans la base de données
      */
-    private int $idPlateforme;
+    private $idPlateforme;
 
     /**
      * @var string
      */
-    private string $nomPlateforme;
+    private $nomPlateforme;
 
     /**
      * @param array $datas

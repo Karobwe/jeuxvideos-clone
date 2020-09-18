@@ -1,5 +1,5 @@
 # Jeux-Vidéos Clone
-> Projet pour pratiquer ma POO avec PHP, en essayant de cloner le site [jeuxvideo.com](https://www.jeuxvideo.com/) (en version __très simplifier__)
+> Projet pour pratiquer la POO avec PHP, en essayant de cloner le site [jeuxvideo.com](https://www.jeuxvideo.com/) (en version __très simplifier__)
 
 ![](header.png)
 
