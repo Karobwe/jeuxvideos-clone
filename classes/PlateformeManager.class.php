@@ -13,7 +13,7 @@ class PlateformeManager {
 
     /**
      * @param int $idPlatforme
-     * @return array|bool
+     * @return array|bool Tableau représentant la plateforme, ou false si elle n'a pas été trouver
      */
     public function get(int $idPlateforme): array {
         $stmt = $this->pdo->prepare("SELECT * FROM `jeux_video`.`plateforme` 
@@ -30,7 +30,7 @@ class PlateformeManager {
 
     /**
      * @param Plateforme $plateforme L'objet à insérer dans la base de données
-     * @return int L'id dans la base dedonnées de la plateforme qui vient dêtre insérer
+     * @return int L'id dans la base de données de la plateforme qui vient dêtre insérer
      */
     public function add(Plateforme $plateforme): int {
         $stmt = $this->pdo->prepare("INSERT INTO `plateforme` (`idPlateforme`, `nomPlateforme`) 
@@ -96,6 +96,18 @@ class PlateformeManager {
         $stmt->closeCursor();
         
         return $stmt->rowCount();
+    }
+
+    /**
+     * @return array|bool La liste des plateforme sous forme de tableau de tableaux
+     */
+    public function getAll(): array {
+        $stmt = $this->pdo->prepare("SELECT * FROM `jeux_video`.`plateforme`;");
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $stmt->closeCursor();
+        
+        return $result;
     }
     
 }

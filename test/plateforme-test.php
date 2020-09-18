@@ -49,4 +49,31 @@ if($plateformeManager->delete($plateforme)) {
     bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été supprimer de la base de donner");
 }
 
+?>
+
+<h3>Liste des plateformes dans la base de données:</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php 
+    $plateformes_list = $plateformeManager->getAll();
+    if($plateformes_list):
+        foreach($plateformes_list as $plateforme): ?>
+            <tr>
+                <th scope="row"><?= $plateforme['idPlateforme'] ?></th>
+                <td><?= $plateforme['nomPlateforme'] ?></td>
+            </tr>
+        <?php 
+        endforeach; 
+    endif;
+    ?>
+  </tbody>
+</table>
+
+<?php
 include '../includes/footer.php';
