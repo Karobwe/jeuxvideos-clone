@@ -45,7 +45,7 @@ class PlateformeManager {
     }
 
     /**
-     * Met à jour le nom d'une catégorie, sans toucher à son identifiant
+     * Met à jour le nom d'une plateforme, sans toucher à son identifiant
      * 
      * @param Plateforme $plateforme L'objet à modifier
      * @return int  Le nombre de lignes affecter par la méthode
@@ -74,7 +74,7 @@ class PlateformeManager {
     }
 
     /**
-     * Supprime une catégorie de la base de données
+     * Supprime une plateforme de la base de données
      * 
      * @param Plateforme $plateforme L'objet à supprimer
      * @return int  Le nombre de lignes affecter par la méthode

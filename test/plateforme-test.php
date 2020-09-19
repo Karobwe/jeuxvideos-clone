@@ -46,7 +46,7 @@ if($plateformeManager->update($plateforme)) {
 
 echo '<p>Test de la suppression d\'une plateforme</p>';
 if($plateformeManager->delete($plateforme)) {
-    bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été supprimer de la base de donner");
+    bootstrap_alert("La plateforme {$plateforme->getNomPlateforme()} a bien été supprimer de la base de données");
 }
 
 ?>
