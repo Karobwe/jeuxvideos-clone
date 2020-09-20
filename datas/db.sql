@@ -1,158 +1,129 @@
-CREATE DATABASE  IF NOT EXISTS `jeux_video` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `jeux_video`;
--- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: jeux_video
--- ------------------------------------------------------
--- Server version	5.7.24
+-- --------------------------------------------------------
+-- Hôte :                        localhost
+-- Version du serveur:           8.0.21 - MySQL Community Server - GPL
+-- SE du serveur:                Win64
+-- HeidiSQL Version:             10.2.0.5599
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `categorie`
---
 
+-- Listage de la structure de la base pour jeux_video
+DROP DATABASE IF EXISTS `jeux_video`;
+CREATE DATABASE IF NOT EXISTS `jeux_video` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `jeux_video`;
+
+-- Listage de la structure de la table jeux_video. categorie
 DROP TABLE IF EXISTS `categorie`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categorie` (
-  `idCategorie` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `categorie` (
+  `idCategorie` int unsigned NOT NULL AUTO_INCREMENT,
   `nomCategorie` varchar(64) NOT NULL,
   PRIMARY KEY (`idCategorie`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `categorie`
---
-
-LOCK TABLES `categorie` WRITE;
+-- Listage des données de la table jeux_video.categorie : ~5 rows (environ)
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+INSERT INTO `categorie` (`idCategorie`, `nomCategorie`) VALUES
+	(1, 'Action'),
+	(2, 'Aventure'),
+	(3, 'RPG'),
+	(4, 'Sport'),
+	(5, 'Indépendant'),
+	(6, 'Battle Royale'),
+	(7, 'Simulation');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `editeur`
---
-
+-- Listage de la structure de la table jeux_video. editeur
 DROP TABLE IF EXISTS `editeur`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `editeur` (
-  `idEditeur` int(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `editeur` (
+  `idEditeur` int unsigned NOT NULL AUTO_INCREMENT,
   `nomEditeur` varchar(64) NOT NULL,
   `siteEditeur` varchar(64) NOT NULL,
   PRIMARY KEY (`idEditeur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `editeur`
---
-
-LOCK TABLES `editeur` WRITE;
+-- Listage des données de la table jeux_video.editeur : ~0 rows (environ)
 /*!40000 ALTER TABLE `editeur` DISABLE KEYS */;
+INSERT INTO `editeur` (`idEditeur`, `nomEditeur`, `siteEditeur`) VALUES
+	(1, 'Kinetic Games', 'kineticgames.co.uk'),
+	(2, 'Devolver Digital', 'devolverdigital.com'),
+	(3, 'Paradox Interactive', 'https://www.paradoxplaza.com'),
+	(4, '2K', 'https://store.steampowered.com/app/1225330/NBA_2K21/'),
+	(5, 'Xbox Game Studio', 'https://www.xbox.com/fr-FR/xbox-game-studios');
 /*!40000 ALTER TABLE `editeur` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `jeux`
---
-
+-- Listage de la structure de la table jeux_video. jeux
 DROP TABLE IF EXISTS `jeux`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `jeux` (
-  `idJeux` int(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `jeux` (
+  `idJeux` int unsigned NOT NULL AUTO_INCREMENT,
   `titre` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `pegi` int(2) NOT NULL,
-  `siteJeux` varchar(64) NOT NULL,
-  `dateSortie` date NOT NULL,
+  `description` text,
+  `pegi` int DEFAULT NULL,
+  `siteJeux` varchar(64) DEFAULT NULL,
+  `dateSortie` date DEFAULT NULL,
+  `idCategorie` int unsigned NOT NULL,
+  `idEditeur` int unsigned NOT NULL,
+  `idPlateforme` int unsigned NOT NULL,
   PRIMARY KEY (`idJeux`),
-  CONSTRAINT `idCategorie` FOREIGN KEY (`idJeux`) REFERENCES `categorie` (`idCategorie`),
-  CONSTRAINT `idEditeur` FOREIGN KEY (`idJeux`) REFERENCES `editeur` (`idEditeur`),
-  CONSTRAINT `idPlateforme` FOREIGN KEY (`idJeux`) REFERENCES `plateforme` (`idPlateforme`),
-  CONSTRAINT `idUtilisateur` FOREIGN KEY (`idJeux`) REFERENCES `utilisateurs` (`idUtilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  UNIQUE KEY `idJeux_UNIQUE` (`idJeux`),
+  KEY `fk_categorie_idx` (`idCategorie`),
+  KEY `fk_editeur_idx` (`idEditeur`),
+  KEY `fk_plateforme_idx` (`idPlateforme`),
+  CONSTRAINT `fk_categorie` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`idCategorie`),
+  CONSTRAINT `fk_editeur` FOREIGN KEY (`idEditeur`) REFERENCES `editeur` (`idEditeur`),
+  CONSTRAINT `fk_plateforme` FOREIGN KEY (`idPlateforme`) REFERENCES `plateforme` (`idPlateforme`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `jeux`
---
-
-LOCK TABLES `jeux` WRITE;
+-- Listage des données de la table jeux_video.jeux : ~5 rows (environ)
 /*!40000 ALTER TABLE `jeux` DISABLE KEYS */;
+INSERT INTO `jeux` (`idJeux`, `titre`, `description`, `pegi`, `siteJeux`, `dateSortie`, `idCategorie`, `idEditeur`, `idPlateforme`) VALUES
+	(1, 'Fall Guys: Ultimate Knockout', 'Fall Guys: Ultimate Knockout réunit, pêle-mêle, des hordes de concurrents en ligne, et les précipite sans ménagement dans une compétition maboule composée de rounds de plus en plus anarchiques où les participants sont joyeusement dézingués jusqu\'à ce qu\'il n\'en reste plus qu\'un seul ! Surmontez des obstacles bizarroïdes, bousculez des rivaux turbulents et défiez les lois inflexibles de la physique pour vous frayer un chemin jusqu\'à la splendeur suprême ! Laissez votre amour propre au vestiaire et préparez-vous à subir des échecs burlesques avant de pouvoir espérer brandir fièrement la couronne !', NULL, 'https://fallguys.com', '2020-08-04', 6, 2, 3),
+	(2, 'Phasmophobia', 'Phasmophobia is a 4 player online co-op psychological horror where you and your team members of paranormal investigators will enter haunted locations filled with paranormal activity and gather as much evidence of the paranormal as you can. You will use your ghost hunting equipment to search for and record evidence of whatever ghost is haunting the location to sell onto a ghost removal team.', NULL, 'https://store.steampowered.com/app/739630/Phasmophobia/', '2020-09-18', 5, 1, 4),
+	(3, 'Crusader Kings III', 'Paradox Development Studio vous propose la suite d\'un des jeux de stratégie les plus populaires de tous les temps. Issu d\'une longue lignée mêlant histoire et stratégie de grande envergure, Crusader Kings III se dote au passage de nombreux moyens inédits pour garantir la prospérité de votre maison.', NULL, 'https://store.steampowered.com/app/1158310/Crusader_Kings_III/', '2020-09-01', 3, 3, 2),
+	(4, 'NBA 2K21', 'https://store.steampowered.com/app/1225330/NBA_2K21/', NULL, NULL, '2020-09-04', 4, 4, 1),
+	(6, 'Microsoft Flight Simulator', 'Des appareils légers aux gros porteurs, pilotez des avions détaillés et fidèles dans la nouvelle génération de Microsoft Flight Simulator. Mettez à l\'épreuve vos compétences dans des conditions exigeantes telles que le vol de nuit, la simulation atmosphérique et la météo réelle, dans un monde vivant et dynamique. Créez votre plan de vol et allez partout. Microsoft Flight Simulator comprend 20 avions extrêmement détaillés avec des modèles de vol uniques et 30 aéroports reproduits à la main.', 3, 'https://store.steampowered.com/app/1250410/', '2020-09-18', 7, 5, 1);
 /*!40000 ALTER TABLE `jeux` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `plateforme`
---
-
+-- Listage de la structure de la table jeux_video. plateforme
 DROP TABLE IF EXISTS `plateforme`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `plateforme` (
-  `idPlateforme` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `plateforme` (
+  `idPlateforme` int unsigned NOT NULL AUTO_INCREMENT,
   `nomPlateforme` varchar(64) NOT NULL,
   PRIMARY KEY (`idPlateforme`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `plateforme`
---
-
-LOCK TABLES `plateforme` WRITE;
+-- Listage des données de la table jeux_video.plateforme : ~5 rows (environ)
 /*!40000 ALTER TABLE `plateforme` DISABLE KEYS */;
-INSERT INTO `plateforme` VALUES (1,'PS4'),(2,'Xbox One');
+INSERT INTO `plateforme` (`idPlateforme`, `nomPlateforme`) VALUES
+	(1, 'PC'),
+	(2, 'PS4'),
+	(3, 'PS5'),
+	(4, 'Xbox One'),
+	(5, 'Wii');
 /*!40000 ALTER TABLE `plateforme` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `utilisateurs`
---
-
+-- Listage de la structure de la table jeux_video. utilisateurs
 DROP TABLE IF EXISTS `utilisateurs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `utilisateurs` (
-  `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `utilisateurs` (
+  `idUtilisateur` int unsigned NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `statut` enum('utilisateur','admin') NOT NULL DEFAULT 'utilisateur',
   PRIMARY KEY (`idUtilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `utilisateurs`
---
-
-LOCK TABLES `utilisateurs` WRITE;
+-- Listage des données de la table jeux_video.utilisateurs : ~0 rows (environ)
 /*!40000 ALTER TABLE `utilisateurs` DISABLE KEYS */;
-INSERT INTO `utilisateurs` VALUES (1,'Azeaze','aze@aze.aze','azeazeaze','utilisateur'),(2,'Qweqwe','qwe@qwe.qwe','qweqweqwe','utilisateur'),(3,'Foo','foo@foo.foo','foofoofoo','utilisateur');
+INSERT INTO `utilisateurs` (`idUtilisateur`, `pseudo`, `email`, `password`, `statut`) VALUES
+	(1, 'Azeaze', 'aze@aze.aze', 'azeazeaze', 'utilisateur'),
+	(2, 'Foo', 'fo@goo.foo', 'foofoofoo', 'utilisateur');
 /*!40000 ALTER TABLE `utilisateurs` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-09-18 17:04:18
