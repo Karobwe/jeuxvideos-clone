@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `idCategorie` int unsigned NOT NULL AUTO_INCREMENT,
   `nomCategorie` varchar(64) NOT NULL,
   PRIMARY KEY (`idCategorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table jeux_video.categorie : ~5 rows (environ)
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `editeur` (
   `nomEditeur` varchar(64) NOT NULL,
   `siteEditeur` varchar(64) NOT NULL,
   PRIMARY KEY (`idEditeur`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table jeux_video.editeur : ~0 rows (environ)
 /*!40000 ALTER TABLE `editeur` DISABLE KEYS */;
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `jeux` (
   CONSTRAINT `fk_categorie` FOREIGN KEY (`idCategorie`) REFERENCES `categorie` (`idCategorie`),
   CONSTRAINT `fk_editeur` FOREIGN KEY (`idEditeur`) REFERENCES `editeur` (`idEditeur`),
   CONSTRAINT `fk_plateforme` FOREIGN KEY (`idPlateforme`) REFERENCES `plateforme` (`idPlateforme`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table jeux_video.jeux : ~5 rows (environ)
 /*!40000 ALTER TABLE `jeux` DISABLE KEYS */;
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `plateforme` (
   `idPlateforme` int unsigned NOT NULL AUTO_INCREMENT,
   `nomPlateforme` varchar(64) NOT NULL,
   PRIMARY KEY (`idPlateforme`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table jeux_video.plateforme : ~5 rows (environ)
 /*!40000 ALTER TABLE `plateforme` DISABLE KEYS */;
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `password` varchar(255) NOT NULL,
   `statut` enum('utilisateur','admin') NOT NULL DEFAULT 'utilisateur',
   PRIMARY KEY (`idUtilisateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table jeux_video.utilisateurs : ~0 rows (environ)
 /*!40000 ALTER TABLE `utilisateurs` DISABLE KEYS */;

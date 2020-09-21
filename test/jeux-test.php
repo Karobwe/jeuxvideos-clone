@@ -83,9 +83,9 @@ if($jeuxManager->delete($jeux)) {
                 <th scope="row"><?= $jeu['titre'] ?></th>
                 <th scope="row"><?= $jeu['pegi'] ?></th>
                 <th scope="row"><?= $jeu['dateSortie'] ?></th>
-                <th scope="row"><?= $jeu['idCategorie'] ?></th>
-                <th scope="row"><?= $jeu['idEditeur'] ?></th>
-                <th scope="row"><?= $jeu['idPlateforme'] ?></th>
+                <th scope="row"><?= $jeu['nomCategorie'] ?></th>
+                <th scope="row"><?= $jeu['nomEditeur'] ?></th>
+                <th scope="row"><?= $jeu['nomPlateforme'] ?></th>
             </tr>
         <?php 
         endforeach; 

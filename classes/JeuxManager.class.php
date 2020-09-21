@@ -41,8 +41,19 @@ class JeuxManager {
   */
   public function get(int $idJeux): array {
     $stmt = $this->pdo->prepare("SELECT * FROM `jeux_video`.`jeux`
-      WHERE `idJeux` = :idJeux;
+      WHERE `idJeux` = :idJeux
     ");
+
+    $stmt = $this->pdo->prepare("SELECT * 
+      FROM `jeux_video`.`jeux`
+      JOIN `jeux_video`.`categorie`
+      ON `categorie`.`idCategorie` = `jeux`.`idCategorie`
+      JOIN `jeux_video`.`editeur`
+      ON `editeur`.`idEditeur` = `jeux`.`idEditeur`
+      JOIN `jeux_video`.`plateforme` 
+      ON `plateforme`.`idPlateforme` = `jeux`.`idPlateforme`;
+      WHERE `idJeux` = :idJeux"
+    );
 
     $stmt->bindValue(':idJeux', $idJeux, PDO::PARAM_INT);
     $stmt->execute();
@@ -193,7 +204,16 @@ class JeuxManager {
   * @return array|bool La liste des jeux sous forme de tableau de tableaux
   */
   public function getAll(): array {
-    $stmt = $this->pdo->prepare("SELECT * FROM `jeux_video`.`jeux`;");
+    $stmt = $this->pdo->prepare("SELECT * 
+      FROM `jeux_video`.`jeux`
+      JOIN `jeux_video`.`categorie`
+      ON `categorie`.`idCategorie` = `jeux`.`idCategorie`
+      JOIN `jeux_video`.`editeur`
+      ON `editeur`.`idEditeur` = `jeux`.`idEditeur`
+      JOIN `plateforme` 
+      ON `plateforme`.`idPlateforme` = `jeux`.`idPlateforme`;"
+    );
+
     $stmt->execute();
     $result = $stmt->fetchAll();
     $stmt->closeCursor();

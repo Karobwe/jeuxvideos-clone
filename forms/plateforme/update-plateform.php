@@ -9,7 +9,7 @@ require_once('includes/db.php');
 require_once('includes/functions.php');
 ?>
 
-<h2>Ajouter une nouvelle plateforme de jeux</h2>
+<h2>Modifier plateforme de jeux</h2>
 
 <form>
     <div class="form-group">
